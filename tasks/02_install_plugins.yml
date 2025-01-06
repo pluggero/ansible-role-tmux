@@ -1,0 +1,16 @@
+---
+- name: Ensure plugin folder exists
+  ansible.builtin.file:
+    path: "{{ tmux_plugin_dir }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Clone tpm repository
+  ansible.builtin.git:
+    repo: "{{ tmux_plugin_tpm_repo }}"
+    dest: "{{ tmux_plugin_dir }}/tpm"
+    update: no
+    version: "{{ tmux_plugin_tpm_version }}"
+  become: false

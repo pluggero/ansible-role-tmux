@@ -1,0 +1,6 @@
+---
+tmux_dep_pkgs:
+  - npm
+
+tmux_distro_pkgs:
+  - tmux
