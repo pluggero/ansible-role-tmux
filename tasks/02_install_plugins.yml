@@ -11,6 +11,6 @@
   ansible.builtin.git:
     repo: "{{ tmux_plugin_tpm_repo }}"
     dest: "{{ tmux_plugin_dir }}/tpm"
-    update: no
+    update: false
     version: "{{ tmux_plugin_tpm_version }}"
   become: false
