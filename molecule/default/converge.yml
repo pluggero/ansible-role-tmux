@@ -4,6 +4,9 @@
 
   vars:
     ansible_user: root
+    tmux_plugins:
+      - name: "vim-tmux-navigator"
+        namespace: "christoomey"
 
   pre_tasks:
     - name: Update apt cache
