@@ -30,10 +30,10 @@ bind-key -n C-y \
     copy-mode \; \
     send-keys -X cursor-up \; \
     send-keys -X cursor-up \; \
-    send-keys -X search-backward "{{ ansible_user }}@{{ ansible_hostname }}" \; \
+    send-keys -X search-backward "$USER@$hostname" \; \
     send-keys -X cursor-down \; \
     send-keys -X begin-selection \; \
-    send-keys -X search-forward "{{ ansible_user }}@{{ ansible_hostname }}" \; \
+    send-keys -X search-forward "$USER@$hostname" \; \
     send-keys -X cursor-up \; \
     send-keys -X end-of-line \; \
     send-keys -X cursor-left
