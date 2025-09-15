@@ -2,7 +2,7 @@
 tmux_config_dir: "{{ ansible_env.HOME }}/.config/tmux"
 tmux_config_file: "{{ tmux_config_dir }}/tmux.conf"
 tmux_install_method: "package"
-tmux_shell: "{{ ansible_shell_type }}"
+tmux_shell: "{{ ansible_user_shell }}"
 
 tmux_plugin_tpm_version: "3.1.0"
 tmux_plugin_dir: "{{ tmux_config_dir }}/plugins"
