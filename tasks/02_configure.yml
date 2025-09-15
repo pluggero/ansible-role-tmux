@@ -1,6 +1,17 @@
 ---
 - name: Add tmux config file
   block:
+    # Tmux needs a full path to the shell binary
+    - name: Detect shell path
+      ansible.builtin.command: which {{ tmux_shell }}
+      register: tmux_shell_path_result
+      changed_when: false
+      failed_when: tmux_shell_path_result.rc != 0
+
+    - name: Set shell path fact
+      ansible.builtin.set_fact:
+        tmux_shell_path: "{{ tmux_shell_path_result.stdout }}"
+
     - name: Ensure config folder exists
       ansible.builtin.file:
         path: "{{ tmux_config_dir }}"
