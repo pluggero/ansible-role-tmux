@@ -12,6 +12,20 @@ None.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+### `tmux_key_bindings`
+
+Each entry supports `key` (required), `command` (required), and `flags` (optional, e.g. `-n`, `-r`, `-T copy-mode-vi`). Multi-step sequences use `\;` as separator in `command`.
+
+```yaml
+tmux_key_bindings:
+  - key: "C-l"
+    command: "send-keys 'C-l'"
+    flags: "-n"
+  - key: "C-y"
+    command: "copy-mode \\; send-keys -X cursor-up"
+    flags: "-n"
+```
+
 ## Dependencies
 
 None.

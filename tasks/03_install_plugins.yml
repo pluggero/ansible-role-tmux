@@ -26,6 +26,8 @@
 - name: Install missing tmux plugins
   ansible.builtin.command:
     cmd: "{{ tmux_plugin_dir }}/tpm/bin/install_plugins"
+  environment:
+    TMUX_PLUGIN_MANAGER_PATH: "{{ tmux_plugin_dir }}/"
   register: tmux_plugins_install
   changed_when: "'download success' in tmux_plugins_install.stdout"
   when: tmux_plugin_stat.results | selectattr('stat.exists', 'equalto', false) | list | length > 0

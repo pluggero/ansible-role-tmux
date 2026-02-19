@@ -2,11 +2,12 @@
 - name: Converge
   hosts: all
 
+  vars_files:
+    - ../../vars/molecule_vars.yml
+
   vars:
-    ansible_user: root
-    tmux_plugins:
-      - name: "vim-tmux-navigator"
-        namespace: "christoomey"
+    ansible_user: ansible
+    ansible_become_password: ansible
 
   pre_tasks:
     - name: Update apt cache
@@ -14,6 +15,7 @@
         update_cache: true
         cache_valid_time: 3600
       when: ansible_os_family == 'Debian'
+      become: true
 
   roles:
     - role: pluggero.tmux
