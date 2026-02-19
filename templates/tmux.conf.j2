@@ -64,6 +64,7 @@ bind {{ binding.flags | default('') }} {{ binding.key }} {{ binding.command }}
 
 # tpm plugin
 set -g @plugin 'tmux-plugins/tpm'
+set-environment -g TMUX_PLUGIN_MANAGER_PATH '{{ tmux_plugin_dir }}/'
 
 # list of tmux plugins
 {% for plugin in tmux_plugins %}

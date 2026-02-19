@@ -1,0 +1,15 @@
+---
+tmux_plugins:
+  - name: "vim-tmux-navigator"
+    namespace: "christoomey"
+tmux_prefix: "C-a"
+tmux_key_bindings:
+  - key: "C-l"
+    command: "send-keys 'C-l'"
+  - key: "C-y"
+    flags: "-n"
+    command: >-
+      copy-mode \;
+      send-keys -X cursor-up \;
+      send-keys -X cursor-up \;
+      send-keys -X search-backward "$USER"

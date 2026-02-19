@@ -2,22 +2,12 @@
 - name: Converge
   hosts: all
 
+  vars_files:
+    - ../../vars/molecule_vars.yml
+
   vars:
-    ansible_user: root
-    tmux_plugins:
-      - name: "vim-tmux-navigator"
-        namespace: "christoomey"
-    tmux_prefix: "C-a"
-    tmux_key_bindings:
-      - key: "C-l"
-        command: "send-keys 'C-l'"
-      - key: "C-y"
-        flags: "-n"
-        command: >-
-          copy-mode \;
-          send-keys -X cursor-up \;
-          send-keys -X cursor-up \;
-          send-keys -X search-backward "$USER"
+    ansible_user: ansible
+    ansible_become_password: ansible
 
   pre_tasks:
     - name: Update apt cache
@@ -25,6 +15,7 @@
         update_cache: true
         cache_valid_time: 3600
       when: ansible_os_family == 'Debian'
+      become: true
 
   roles:
     - role: pluggero.tmux
