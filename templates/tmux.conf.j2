@@ -7,11 +7,11 @@ set  -g default-shell "{{ tmux_shell_path }}"
 set -g status-keys vi
 set -g mode-keys   vi
 
-# rebind main key: C-f
+# rebind main key: {{ tmux_prefix }}
 unbind C-b
-set -g prefix C-f
+set -g prefix {{ tmux_prefix }}
 bind -N "Send the prefix key through to the application" \
-  C-f send-prefix
+  {{ tmux_prefix }} send-prefix
 
 set  -g mouse             on
 setw -g aggressive-resize off
@@ -21,22 +21,8 @@ set  -g history-limit     10000
 
 # Use system clipboard in tmux copy mode
 set-window-option -g mode-keys vi
-bind-key -T copy-mode-vi 'v' send -X begin-selection
-bind-key -T copy-mode-vi 'y' send -X copy-selection
-
-# Keybind to select the last command
-# This only works with the nim prompt of fish
-bind-key -n C-y \
-    copy-mode \; \
-    send-keys -X cursor-up \; \
-    send-keys -X cursor-up \; \
-    send-keys -X search-backward "$USER@$hostname" \; \
-    send-keys -X cursor-down \; \
-    send-keys -X begin-selection \; \
-    send-keys -X search-forward "$USER@$hostname" \; \
-    send-keys -X cursor-up \; \
-    send-keys -X end-of-line \; \
-    send-keys -X cursor-left
+bind -T copy-mode-vi 'v' send -X begin-selection
+bind -T copy-mode-vi 'y' send -X copy-selection
 
 # Quality of life stuff
 set -g allow-rename off
@@ -52,13 +38,13 @@ bind k select-pane -U
 bind l select-pane -R
 
 unbind %
-bind | split-window -h
+bind {{ tmux_split_horizontal }} split-window -h
 
 unbind '"'
-bind - split-window -v
+bind {{ tmux_split_vertical }} split-window -v
 
 unbind r
-bind r source-file ~/.config/tmux/tmux.conf
+bind r source-file {{ tmux_config_file }}
 
 bind -r j resize-pane -D 5
 bind -r k resize-pane -U 5
@@ -68,8 +54,13 @@ bind -r h resize-pane -L 5
 bind -r m resize-pane -Z
 
 # Move pane between windows
-bind-key J choose-window 'join-pane -h -s "%%"'
-bind-key S command-prompt -p "Send pane to:" "join-pane -t :'%%'"
+bind J choose-window 'join-pane -h -s "%%"'
+bind S command-prompt -p "Send pane to:" "join-pane -t :'%%'"
+
+# Custom key bindings
+{% for binding in tmux_key_bindings %}
+bind {{ binding.flags | default('') }} {{ binding.key }} {{ binding.command }}
+{% endfor %}
 
 # tpm plugin
 set -g @plugin 'tmux-plugins/tpm'
@@ -80,4 +71,4 @@ set -g @plugin '{{ plugin.namespace }}/{{ plugin.name }}'
 {% endfor %}
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run '~/.config/tmux/plugins/tpm/tpm'
+run '{{ tmux_plugin_tpm_config }}'
