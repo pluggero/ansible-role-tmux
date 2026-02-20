@@ -19,12 +19,25 @@ Each entry supports `key` (required), `command` (required), and `flags` (optiona
 ```yaml
 tmux_key_bindings:
   - key: "C-l"
-    command: "send-keys 'C-l'"
+    command: "send 'C-l'"
     flags: "-n"
   - key: "C-y"
-    command: "copy-mode \\; send-keys -X cursor-up"
+    command: "copy-mode \\; send -X cursor-up"
     flags: "-n"
 ```
+
+For multi-line readability, use YAML folded scalar (`>-`) **without** trailing backslashes—YAML collapses newlines automatically:
+
+```yaml
+- key: "C-y"
+  flags: "-n"
+  command: >-
+    copy-mode \;
+    send -X cursor-up \;
+    send -X search-backward "$USER@$hostname"
+```
+
+Multi-step commands (containing `\;`) are automatically formatted with backslash line continuations (`\`) in the generated `tmux.conf` for readability.
 
 ## Dependencies
 

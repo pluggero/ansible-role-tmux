@@ -59,7 +59,11 @@ bind S command-prompt -p "Send pane to:" "join-pane -t :'%%'"
 
 # Custom key bindings
 {% for binding in tmux_key_bindings %}
+{% if ';' in binding.command %}
+bind {{ binding.flags | default('') }} {{ binding.key }} {{ binding.command | replace(' \\;', ' \\; \\\n  ') }}
+{% else %}
 bind {{ binding.flags | default('') }} {{ binding.key }} {{ binding.command }}
+{% endif %}
 {% endfor %}
 
 # tpm plugin

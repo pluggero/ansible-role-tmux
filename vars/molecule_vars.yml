@@ -5,11 +5,11 @@ tmux_plugins:
 tmux_prefix: "C-a"
 tmux_key_bindings:
   - key: "C-l"
-    command: "send-keys 'C-l'"
+    command: "send 'C-l'"
   - key: "C-y"
     flags: "-n"
     command: >-
       copy-mode \;
-      send-keys -X cursor-up \;
-      send-keys -X cursor-up \;
-      send-keys -X search-backward "$USER"
+      send -X cursor-up \;
+      send -X cursor-up \;
+      send -X search-backward "$USER"
